@@ -95,11 +95,52 @@ function App() {
           </li>
         ))}
       </ul>
-      <button onClick={handleStartEnrollment}>Start Enrollment</button>{" "}
-      <button onClick={handleFinishEnrollment}>Finish Enrollment</button>{" "}
-      <button onClick={handleDeleteAllCourses}>Delete All Courses</button>{" "}
-      <button onClick={handleCancelEnrollment}>Cancel Enrollment</button>{" "}
-      <button onClick={handlePayment}>Payment</button>
+      <button
+        disabled={
+          enrollmentStatus === "Payed" || enrollmentStatus === "Cancelled"
+        }
+        onClick={handleStartEnrollment}
+      >
+        Create Registration
+      </button>{" "}
+      <button
+        disabled={
+          enrollmentStatus === "Payed" ||
+          enrollmentStatus === "Cancelled" ||
+          enrollmentStatus === "Completed"
+        }
+        onClick={handleFinishEnrollment}
+      >
+        Complete
+      </button>{" "}
+      <button
+        disabled={
+          enrollmentStatus === "Payed" || enrollmentStatus === "Cancelled"
+        }
+        onClick={handleDeleteAllCourses}
+      >
+        Clear All Courses
+      </button>{" "}
+      <button
+        disabled={
+          enrollmentStatus === "Completed" ||
+          enrollmentStatus === "InProgress" ||
+          enrollmentStatus === "Payed"
+        }
+        onClick={handleCancelEnrollment}
+      >
+        Cancel{" "}
+      </button>{" "}
+      <button
+        disabled={
+          enrollmentStatus === "Payed" ||
+          enrollmentStatus === "Cancelled" ||
+          enrollmentStatus === "InProgress"
+        }
+        onClick={handlePayment}
+      >
+        Pay
+      </button>
       {enrollmentStatus && (
         <p style={{ marginTop: "1rem" }}>{enrollmentStatus}</p>
       )}
