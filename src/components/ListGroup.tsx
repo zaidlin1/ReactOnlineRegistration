@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import configData from "../config.json";
 
 interface Course {
   id: string;
@@ -12,7 +13,7 @@ function App() {
   const [courses, setCourses] = useState<Course[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/v1/Courses")
+    fetch(configData.SERVER_URL)
       .then((res) => res.json())
       .then((courses: Course[]) => setCourses(courses));
   }, []);
@@ -31,7 +32,7 @@ function App() {
     if (exists) return;
     setSelectedCourses([...selectedCourses, course]);
 
-    fetch("http://localhost:5000/api/v1/Courses", {
+    fetch(configData.SERVER_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +56,7 @@ function App() {
 
   const handleDeleteAllCourses = () => {
     setSelectedCourses([]);
-    setEnrollmentStatus("");
+    setEnrollmentStatus("InProgress");
   };
 
   const handleCancelEnrollment = () => {
@@ -123,9 +124,7 @@ function App() {
       </button>{" "}
       <button
         disabled={
-          enrollmentStatus === "Completed" ||
-          enrollmentStatus === "InProgress" ||
-          enrollmentStatus === "Payed"
+          enrollmentStatus === "Completed" || enrollmentStatus === "Payed"
         }
         onClick={handleCancelEnrollment}
       >
