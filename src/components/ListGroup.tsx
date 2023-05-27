@@ -32,7 +32,7 @@ function App() {
     if (exists) return;
     setSelectedCourses([...selectedCourses, course]);
 
-    fetch(configData.SERVER_URL, {
+    fetch(configData.SERVER_URL + "/CheckCourses", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +41,21 @@ function App() {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data === true) setEnrollmentStatus("Completed");
+        if (data === true) {
+          setEnrollmentStatus("Completed");
+
+          fetch(configData.SERVER_URL + "/CheckIntersectCourses", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(selectedCourses.concat(course)),
+          })
+            .then((response1) => response1.text())
+            .then((data1) => {
+              alert(data1);
+            });
+        }
       });
   };
 
