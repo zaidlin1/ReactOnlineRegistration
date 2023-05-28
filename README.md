@@ -1,5 +1,5 @@
 # myReactApp
-
+Project running instructions: 
 Open folder in Visual Studio Code
 
 Open terminal and run 'nmp install' command
